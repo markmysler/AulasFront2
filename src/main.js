@@ -32,11 +32,11 @@ const vuetify = createVuetify({
 })
 
 /* API Despliegue */
-// axios.defaults.baseURL= 'http://149.50.135.56:8080'
+axios.defaults.baseURL= 'http://149.50.135.56:8000'
 
 /* API Local */
 // axios.defaults.baseURL= 'http://172.22.112.1:8000'
-axios.defaults.baseURL= 'http://localhost:8000'
+// axios.defaults.baseURL= 'http://localhost:8000'
 axios.defaults.xsrfCookieName = 'csrftoken'; // Name of the cookie that stores the CSRF token
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 createApp(App)
