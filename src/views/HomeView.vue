@@ -37,7 +37,6 @@ export default {
   },
   methods:{
     async getAulas(){
-      console.log(this.$store.state.token)
       await axios
       .get('/api/v1/aulas/', {headers: {Authorization: `Token ${this.$store.state.token}`},withCredentials: true })
       .then(response => {
