@@ -105,7 +105,7 @@
             {{time.length >= 3 ? time : `${time}:00`}}
         </v-btn>
         </div>
-        <v-btn class="mt-3 mb-5 px-5" @click="submitReservationData" color="blue" :disabled="times.length === 0">Buscar aulas disponibles</v-btn>
+        <v-btn class="mt-3 mb-5 px-5" @click="submitReservationData" color="blue" :disabled="times.length === 0" :loading="isLoading"> Buscar aulas disponibles</v-btn>
     </div>
     <div v-if="page === 'aulaOptions'" class="d-flex flex-wrap w-50 ga-5 justify-space-evenly wrapper mt-5">
         <div v-if="aulaOptions.length === 0" class="d-flex flex-column align-items-center justify-content-evenly ga-5 mt-5">
@@ -182,7 +182,8 @@ export default {
                     label: 'Mensualmente',
                     value: 'monthly',
                 },
-            ]
+            ],
+            isLoading: false
         }
     },
     mounted(){
@@ -213,6 +214,7 @@ export default {
             this.page = pagina
         },
         async submitReservationData(){
+            this.isLoading = true
             this.reservationData.start_date = this.formattedStart
             if (this.reservationData.frequency === 'none') {
                 this.reservationData.end_date = this.formattedStart
@@ -231,6 +233,7 @@ export default {
             .catch(error=>{
                 console.log(error);
             })
+            this.isLoading = false
         },
         async reserveAula(id){
             if (this.canSendRequest()) {
