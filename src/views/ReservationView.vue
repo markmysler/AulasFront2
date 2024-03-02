@@ -380,7 +380,6 @@ export default {
 					this.aulaOptions = response.data;
 					this.aulaOptionsTime = new Date().getTime();
 					this.movePage("aulaOptions");
-					console.log(this.reservationData);
 				})
 				.catch((error) => {
 					console.log(error);
