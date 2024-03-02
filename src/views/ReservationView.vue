@@ -380,6 +380,7 @@ export default {
 					this.aulaOptions = response.data;
 					this.aulaOptionsTime = new Date().getTime();
 					this.movePage("aulaOptions");
+					console.log(this.reservationData);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -470,7 +471,7 @@ export default {
 			if (!this.end_date) return null;
 			const d = new Date(this.end_date);
 			let month = "" + (d.getMonth() + 1);
-			let day = "" + d.getDate();
+			let day = "" + (d.getDate() + 1);
 			const year = d.getFullYear();
 
 			if (month.length < 2) month = "0" + month;
