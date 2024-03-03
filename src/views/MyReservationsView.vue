@@ -63,7 +63,7 @@ export default {
 					withCredentials: true,
 				})
 				.then((response) => {
-					this.reservations = response.data;
+					this.reservations = response.data.reverse();
 				})
 				.catch((error) => {
 					console.log(error);
