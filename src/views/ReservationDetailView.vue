@@ -190,7 +190,7 @@ export default {
 		},
 		confirmDeletePartial(date) {
 			Swal.fire({
-				title: "Eliminar fecha?",
+				title: `Eliminar ${this.formatDate(date, 0)}?`,
 				icon: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#3085d6",
