@@ -2,7 +2,7 @@
 	<h2>Reservar un Aula</h2>
 	<!-- Características del Aula -->
 	<div
-		class="w-75 columnItemsCenter ga-3 elevation-5 rounded-xl pt-5 mb-5 wrapper"
+		class="w-75 columnItemsCenter ga-3 elevation-5 rounded-xl pt-5 mb-8 mt-3 wrapper"
 		v-if="page === ''"
 	>
 		<div class="columnItemsCenter ga-3">
@@ -21,7 +21,7 @@
 			</v-text-field>
 		</div>
 		<div class="columnItemsCenter ga-3">
-			<p class="text-center">
+			<p class="text-center px-4">
 				Seleccione solo la categoría que corresponde a su reserva:
 			</p>
 			<v-select
@@ -78,7 +78,8 @@
 		</div>
 
 		<v-btn
-			class="bg-blue mt-3 mb-5 px-16"
+			elevation="5"
+			class="bg-blue text-white my-3 px-10 px-lg-16 text-lg-h6 py-3 h-auto rounded-pill"
 			:disabled="
 				reservationData.capacity <= 0 ||
 				reservationData.user_category === '' ||
@@ -148,7 +149,8 @@
 					start_date === null ||
 					(reservationData.frequency !== 'none' && end_date === null)
 				"
-				class="bg-blue mb-5 px-16"
+				elevation="5"
+				class="bg-blue text-white my-3 px-10 px-lg-16 text-lg-h6 py-3 h-auto rounded-pill"
 				@click="movePage('times')"
 				>Continuar</v-btn
 			>
@@ -170,10 +172,10 @@
 			Seleccione los bloques horarios a reservar
 		</p>
 		<div
-			class="d-flex flex-wrap align-center justify-space-center ga-2 w-75 my-5"
+			class="d-flex flex-wrap align-center justify-center ga-2 w-75 my-5"
 		>
 			<v-btn
-				class="timeBlockBtn"
+				class="timeBlockBtn h-auto rounded-pill py-2"
 				v-for="time in availableTimes"
 				:key="time"
 				@click="selectTime(time)"
@@ -186,9 +188,9 @@
 			</v-btn>
 		</div>
 		<v-btn
-			class="mt-3 mb-5 px-5"
+			elevation="5"
+			class="bg-blue text-white my-3 px-10 px-lg-16 text-lg-h6 py-3 h-auto rounded-pill"
 			@click="submitReservationData"
-			color="blue"
 			:disabled="times.length === 0"
 			:loading="isLoading"
 		>
@@ -242,7 +244,11 @@
 					</div>
 				</div>
 			</div>
-			<v-btn class="px-14" color="blue" @click="reserveAula(aula.id)">
+			<v-btn
+				class="px-14 h-auto rounded-pill py-2"
+				color="blue"
+				@click="reserveAula(aula.id)"
+			>
 				Reservar
 			</v-btn>
 		</v-card>

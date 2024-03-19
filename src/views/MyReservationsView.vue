@@ -6,8 +6,8 @@
 	>
 		<v-btn
 			@click="$router.push('/reservar')"
-			elevation="3"
-			class="bg-blue text-white my-2 px-8 py-2"
+			elevation="5"
+			class="bg-blue text-white my-3 px-10 px-lg-16 text-lg-h6 py-3 h-auto rounded-pill"
 			append-icon="mdi-plus"
 			>Reservar aula</v-btn
 		>
