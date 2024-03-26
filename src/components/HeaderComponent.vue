@@ -9,7 +9,7 @@
 		>
 	</v-app-bar>
 	<v-navigation-drawer v-model="showMenu" app>
-		<v-list tag="ul" v-if="!$store.state.isAuthenticated">
+		<v-list tag="ul" v-if="!$store.state.isAuthenticated" class="pb-0">
 			<li
 				v-for="item in menuRegular"
 				:key="item.title"
@@ -22,8 +22,16 @@
 					<v-list-item-title> {{ item.title }}</v-list-item-title>
 				</v-list-item>
 			</li>
+			<li class="logout" v-show="showInstallButton">
+				<v-list-item @click="this.downloadApp()">
+					<v-list-item-action>
+						<v-icon color="blue" icon="mdi-download"></v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Descargar App</v-list-item-title>
+				</v-list-item>
+			</li>
 		</v-list>
-		<v-list tag="ul" v-else class="menuRequiredLogin">
+		<v-list tag="ul" v-else class="menuRequiredLogin pb-0">
 			<div class="mt-2">
 				<li
 					v-for="item in menuRequiredLogin"
@@ -38,6 +46,14 @@
 					</v-list-item>
 				</li>
 			</div>
+			<li class="logout" v-show="showInstallButton">
+				<v-list-item @click="this.downloadApp()">
+					<v-list-item-action>
+						<v-icon color="blue" icon="mdi-donwload"></v-icon>
+					</v-list-item-action>
+					<v-list-item-title>Descargar App</v-list-item-title>
+				</v-list-item>
+			</li>
 			<li class="logout">
 				<v-list-item @click="this.logout()">
 					<v-list-item-action>
@@ -49,7 +65,11 @@
 		</v-list>
 	</v-navigation-drawer>
 </template>
-
+<!-- {
+	title: "Descargar app",
+	icon: "mdi-download",
+	
+}, -->
 <script>
 import axios from "axios";
 export default {
@@ -57,6 +77,8 @@ export default {
 	data() {
 		return {
 			showMenu: false,
+			showInstallButton: false,
+			objectInstall: null,
 			menuRegular: [
 				{
 					path: "/iniciar-sesion",
@@ -115,6 +137,29 @@ export default {
 		closeHeader() {
 			this.showMenu = false;
 		},
+		downloadApp() {
+			if (this.objectInstall) {
+				this.objectInstall.prompt();
+				this.objectInstall.userChoice.then((choiceResult) => {
+					console.log("Respuesta: ", choiceResult.outcome);
+					if (choiceResult.outcome == "accepted") {
+						this.showInstallButton = false;
+					}
+				});
+			}
+			console.log("descargando...");
+		},
+		handleBeforeInstallPrompt(event) {
+			event.preventDefault();
+			this.objectInstall = event;
+			this.showInstallButton = true;
+		},
+	},
+	mounted() {
+		window.addEventListener(
+			"beforeinstallprompt",
+			this.handleBeforeInstallPrompt
+		);
 	},
 };
 </script>
