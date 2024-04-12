@@ -49,7 +49,7 @@
 			<li class="logout" v-show="showInstallButton">
 				<v-list-item @click="this.downloadApp()">
 					<v-list-item-action>
-						<v-icon color="blue" icon="mdi-donwload"></v-icon>
+						<v-icon color="blue" icon="mdi-download"></v-icon>
 					</v-list-item-action>
 					<v-list-item-title>Descargar App</v-list-item-title>
 				</v-list-item>
@@ -147,7 +147,6 @@ export default {
 					}
 				});
 			}
-			console.log("descargando...");
 		},
 		handleBeforeInstallPrompt(event) {
 			event.preventDefault();
