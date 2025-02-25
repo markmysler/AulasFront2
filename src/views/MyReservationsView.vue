@@ -82,7 +82,7 @@ export default {
 			}`;
 		},
 	},
-	mounted() {
+	async mounted() {
 		(document.title = "Mis reservas"), this.getMyReservations();
 	},
 };

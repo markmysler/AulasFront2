@@ -168,10 +168,25 @@
 		>
 			Atrás
 		</v-btn>
-		<p class="text-center mt-3">
+		<p class="text-center my-3">
 			Seleccione los bloques horarios a reservar
 		</p>
-		<div
+		<div class="w-75 mt-5 columnItemsCenter">
+			<v-range-slider
+				v-model="times"
+				thumb-label="always"
+				class="w-100"
+				:step="0.5"
+				:min="7"
+				:max="19.5"
+			>
+				<template v-slot:thumb-label="{ modelValue }">
+					<!-- <v-icon :icon="season(modelValue)" theme="dark"></v-icon> -->
+					<p>{{ getText(modelValue) }}</p>
+				</template>
+			</v-range-slider>
+		</div>
+		<!-- <div
 			class="d-flex flex-wrap align-center justify-center ga-2 w-75 my-5"
 		>
 			<v-btn
@@ -186,7 +201,7 @@
 			>
 				{{ time.length >= 3 ? time : `${time}:00` }}
 			</v-btn>
-		</div>
+		</div> -->
 		<v-btn
 			elevation="5"
 			class="bg-blue text-white my-3 px-10 px-lg-16 text-lg-h6 py-3 h-auto rounded-pill"
@@ -266,7 +281,7 @@ export default {
 			today: null,
 			start_date: null,
 			end_date: null,
-			times: [],
+			times: [7, 9],
 			reservationData: {
 				capacity: 0,
 				has_screen: false,
@@ -274,7 +289,8 @@ export default {
 				start_date: null,
 				end_date: null,
 				frequency: "none",
-				times: [],
+				start_time: null,
+				end_time: null,
 				user_category: "",
 				title: "",
 			},
@@ -351,6 +367,18 @@ export default {
 		this.today = [year, month, day].join("-");
 	},
 	methods: {
+		getText(value) {
+			let output = "";
+			if (value % 1 === 0) {
+				output = `${value}:00`;
+			} else {
+				output = `${Math.floor(value)}:30`;
+			}
+			if (value < 10) {
+				output = `0${output}`;
+			}
+			return output;
+		},
 		selectTime(timeStr) {
 			if (this.times.findIndex((i) => i === timeStr) !== -1) {
 				const index = this.times.findIndex((i) => i === timeStr);
@@ -373,7 +401,8 @@ export default {
 			this.reservationData.capacity = parseInt(
 				this.reservationData.capacity
 			);
-			this.reservationData.times = this.times.join(",");
+			this.reservationData.start_time = this.getText(this.times[0]);
+			this.reservationData.end_time = this.getText(this.times[1]);
 			await axios
 				.get("/api/v1/get-matching-aulas/", {
 					params: this.reservationData,
@@ -404,8 +433,9 @@ export default {
 							user_category: this.reservationData.user_category,
 							start_date: this.reservationData.start_date,
 							end_date: this.reservationData.end_date,
+							start_time: this.reservationData.start_time,
+							end_time: this.reservationData.end_time,
 							frequency: this.reservationData.frequency,
-							times: this.reservationData.times,
 							title: this.reservationData.title,
 						},
 						{

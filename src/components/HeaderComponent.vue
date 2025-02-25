@@ -131,6 +131,7 @@ export default {
 			localStorage.removeItem("token");
 			localStorage.removeItem("username");
 			localStorage.removeItem("userid");
+			localStorage.removeItem("user");
 			this.$store.commit("removeToken");
 			this.$router.push("/");
 		},

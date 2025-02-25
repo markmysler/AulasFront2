@@ -1,5 +1,8 @@
 <template>
-	<div class="columnItemsCenter">
+	<div
+		class="columnItemsCenter w-100"
+		style="max-width: 1000px; margin: auto"
+	>
 		<h2>Aulas Disponibles</h2>
 		<v-btn
 			@click="$router.push('/reservar')"
@@ -41,8 +44,9 @@
 		</div>
 		<div class="aulasWrapper">
 			<v-card
-				class="aula d-flex flex-column justify-space-between bg-blue-darken-1 elevation-7 text-start pa-5"
-				v-for="aula in aulas"
+				class="aula d-flex flex-column justify-space-between bg-blue-darken-1 elevation-7 text-start pa-5 w-100"
+				style="max-width: 800px"
+				v-for="aula in $store.state.aulas"
 				:key="aula.id"
 				@click="$router.push(`/aula/${aula.id}`)"
 			>
@@ -81,37 +85,11 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
 	name: "HomeView",
-	data() {
-		return {
-			aulas: [],
-		};
-	},
-	methods: {
-		async getAulas() {
-			await axios
-				.get("/api/v1/aulas/", {
-					headers: {
-						Authorization: `Token ${this.$store.state.token}`,
-					},
-					withCredentials: true,
-				})
-				.then((response) => {
-					this.aulas = response.data;
-					this.$store.state.aulas = response.data;
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		},
-	},
 	components: {},
 	mounted() {
 		document.title = "Inicio";
-		this.getAulas();
 	},
 };
 </script>
